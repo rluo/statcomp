@@ -14,7 +14,6 @@ sub_file_name <- args[2]
 # db_results_file <- "len_one_debugger_results.RData"
 # sub_file_name <- "hw2_func.R"
 
-# not real solutions, use submission instead
 sol_env <- new.env()
 load(db_results_file, sol_env)
 
@@ -22,7 +21,6 @@ load(db_results_file, sol_env)
 prob_name <- get("prob_name", sol_env)
 
 ## load submission file
-# sub_file_name <- "test_sub.R"
 sub_env <- new.env()
 loading_time_sec <- system.time(sys.source(sub_file_name, sub_env))[3]
 
@@ -30,8 +28,7 @@ author <- get("author", sub_env)
 
 
 sub_fun <- sub_env[[prob_name]] # get(p_name, sub_env)
-# cannot run
-# input_case_lt <- sol_env[[paste0(p_name, "_input_lt")]] ## get( paste0(p_name, "_input_lt" ) , sol_env)
+
 input_case_lt <- get("input_case_lt", sol_env)
 output_case_lt <- get("output_case_lt", sol_env)
 
