@@ -1,20 +1,18 @@
 #!/usr/local/bin/Rscript
 
-# docker run -ti --rm -v "$PWD":/root -w /root -u root rossiluo/autograder Rscript --vanilla debugger.R prob_debug_results.R  Your_R_Function_file.R
-
+# docker run -ti --rm -v "$PWD":/root -w /root -u root rossiluo/autograder Rscript --vanilla debugger.R prob_debugger_results.RData  Your_R_Function_file.R
+library(peakRAM)
 args <- commandArgs(trailingOnly = TRUE)
 
-if (length(args) == 0) {
-    stop("Please specify the *_debug_results.R file.")
+if (length(args) < 2) {
+    stop("Please specify the *_debug_results.R and submission files.")
 }
 
 db_results_file <- args[1]
+sub_file_name <- args[2]
 
-if (length(args) < 2) {
-    sub_file_name <- "test_sub.R"
-} else {
-    sub_file_name <- args[2]
-}
+# db_results_file <- "len_one_debugger_results.RData"
+# sub_file_name <- "hw2_func.R"
 
 # not real solutions, use submission instead
 sol_env <- new.env()
@@ -31,7 +29,7 @@ loading_time_sec <- system.time(sys.source(sub_file_name, sub_env))[3]
 author <- get("author", sub_env)
 
 
-sub_fun <- sub_env[[p_name]] # get(p_name, sub_env)
+sub_fun <- sub_env[[prob_name]] # get(p_name, sub_env)
 # cannot run
 # input_case_lt <- sol_env[[paste0(p_name, "_input_lt")]] ## get( paste0(p_name, "_input_lt" ) , sol_env)
 input_case_lt <- get("input_case_lt", sol_env)
@@ -53,6 +51,9 @@ for (i in 1:length(input_case_lt)) {
     test_pass[i] <- val_comp
 }
 
-re_line <- paste(author, p_name, mean(test_pass), total_run_time_sec + loading_time_sec, sep = ",")
-print(re_line)
+gc_re <- gc(verbose = FALSE, reset = FALSE)
+prob_ram <- gc_re[1, 6] + gc_re[2, 6]
+
+re_df <- data.frame(author = author, prob_name = prob_name, pass_rate = mean(test_pass), time = as.numeric(total_run_time_sec + loading_time_sec), ram = as.numeric(ram_used + prob_ram))
+print(re_df)
 print(get("metric_lt", sol_env))
