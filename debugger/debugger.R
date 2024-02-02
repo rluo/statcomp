@@ -53,5 +53,11 @@ prob_ram <- gc_re[1, 6] + gc_re[2, 6]
 
 re_df <- data.frame(author = author, prob_name = prob_name, pass_rate = mean(test_pass), time = as.numeric(total_run_time_sec + loading_time_sec), ram = as.numeric(ram_used + prob_ram))
 print(re_df)
+
+if (any(test_pass == FALSE)) {
+    warning("Submission didn't pass the debugger test!")
+} else {
+    print("Passed the debugger. More tests will be run to ensure the accuracy and the suubmission may fail after further testing.")
+}
 print("Reference metrics:")
 print(get("metric_lt", sol_env))
