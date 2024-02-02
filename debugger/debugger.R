@@ -51,7 +51,7 @@ for (i in 1:length(input_case_lt)) {
 gc_re <- gc(verbose = FALSE, reset = FALSE)
 prob_ram <- gc_re[1, 6] + gc_re[2, 6]
 
-re_df <- data.frame(author = author, prob_name = prob_name, pass_rate = mean(test_pass), time = as.numeric(total_run_time_sec + loading_time_sec), ram = as.numeric(ram_used + prob_ram))
+re_df <- data.frame(author = author, prob_name = prob_name, pass_rate = mean(test_pass), time = as.numeric(total_run_time_sec + loading_time_sec), mem = as.numeric(ram_used + prob_ram))
 print(re_df)
 
 if (any(test_pass == FALSE)) {
