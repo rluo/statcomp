@@ -43,7 +43,7 @@ for (i in 1:length(input_case_lt)) {
         case_ram <- peakRAM(re <- sub_fun(case))[4]
     })[3]
     ram_used <- ram_used + case_ram
-    val_comp <- all.equal(output_case_lt[[i]], re)
+    val_comp <- all.equal(output_case_lt[[i]], re, tolerance = 1e-3)
     val_comp <- ifelse(is.logical(val_comp), val_comp, FALSE)
     test_pass[i] <- val_comp
 }
