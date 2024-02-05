@@ -1,0 +1,61 @@
+---
+title: "HW2 Stat Computing"
+author: "Stat Comp"
+output: html_notebook
+---
+
+
+```{r}
+source("hw2_func.R")
+```
+
+
+Put all R functions in a single file `.R`. Check our slides for debugging examples.
+
+
+# Docker and Unix
+......
+
+
+# Docker and R
+......
+
+
+# Length of Ones
+Display the R code
+```{r}
+len_one
+```
+Other codes that you want to show, for example testing on some cases
+
+```{r}
+len_one(rep(1, 4))
+```
+
+Or use the provided debugger
+```{r}
+wd <- getwd()
+d_cmd <- paste0('docker run  --rm -v ', wd, ':/root -w /root -u root --memory=512m --cpus=1  rossiluo/autograder  Rscript --vanilla debugger.R ')
+print(paste(d_cmd, "len_one_debugger_results.RData", "hw2_func.R", collapse = " "))
+system(paste(d_cmd, "len_one_debugger_results.RData", "hw2_func.R", collapse = " "))
+
+```
+Note this implementation failed by the debugger. 
+
+# Hybrid Matrix
+Display the R code
+```{r}
+corcov_mat
+```
+......
+
+# Translation
+Display the R code
+```{r}
+roman_trans
+```
+......
+
+
+
+
